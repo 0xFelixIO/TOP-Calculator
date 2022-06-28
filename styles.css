@@ -16,13 +16,14 @@ body {
     height: 20%;
     border: 2px solid red;
     align-items: center;
-    justify-content: center;
+    justify-content: right;
+    padding-right: 8%;
 }
 
 .calculator {
     border: 4px solid orange;
     width: 50vw;
-    height: 60vh;
+    height: 70vh;
     margin-top: 3vh;
     display: flex;
     flex-direction: column;
