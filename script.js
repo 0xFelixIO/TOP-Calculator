@@ -14,19 +14,6 @@ function division(x, y) {
     return x / y;
 }
 
-function operate(operator, x, y) {
-    switch (operator) {
-        case '+':
-            return addition(x, y);
-        case '-':
-            return subtraction(x, y);
-        case '*':
-            return multiplication(x, y);
-        case '/':
-            return division(x, y);
-    }
-}
-
 // returns the value of a number key on the calculator as an integer
 function updateDisplay(stringValue) {
     let display = document.querySelector('.display');
@@ -43,7 +30,16 @@ function updateValue() {
         return;
     }
 
+    if (val1 == 0 && retValue == '0') {
+        return;
+    }
+
     else if (val1 != null && mathOp == null) {
+        if (val1 == 0) {
+            val1 = retValue;
+            updateDisplay(val1);
+            return;
+        }
         val1 += retValue;
         updateDisplay(val1);
         return;
@@ -51,7 +47,7 @@ function updateValue() {
 
     else if (mathOp != null && val2 == null) {
         val2 = retValue;
-        updateDisplay(val2);
+        updateDisplay(val1 + ' ' + mathOp + ' ' + val2);
         return;
     }
 
@@ -69,6 +65,7 @@ function returnOperation() {
     if (val2 == null || mathOp == null) {
         mathOp = this.textContent;
     }
+    updateDisplay(val1 + ' ' + mathOp);
 }
 
 // reset the calculator variables and display
@@ -76,8 +73,7 @@ function clearFunc() {
     val1 = 0;
     val2 = null;
     mathOp = null;
-    displayValue = '0';
-    updateDisplay(displayValue);
+    updateDisplay('0');
 }
 
 // when equal button is pressed, solve and update values
@@ -86,8 +82,8 @@ function equalFunc() {
         return;
     }
 
-    let numVal1 = parseInt(val1);
-    let numVal2 = parseInt(val2);
+    let numVal1 = parseFloat(val1);
+    let numVal2 = parseFloat(val2);
     let returnVal = 0;
 
     switch(mathOp) {
@@ -99,11 +95,11 @@ function equalFunc() {
             returnVal = subtraction(numVal1, numVal2);
             updateDisplay(returnVal.toString());
             break;
-        case('*'):
+        case('x'):
             returnVal = multiplication(numVal1, numVal2);
             updateDisplay(returnVal.toString());  
             break;      
-        case('/'):
+        case('÷'):
             returnVal = division(numVal1, numVal2);
             updateDisplay(returnVal.toString());
             break;
@@ -114,8 +110,7 @@ function equalFunc() {
     updateDisplay(returnVal);
 }
 
-let displayValue = '0';
-updateDisplay(displayValue);
+updateDisplay('0');
 let val1 = 0;
 let val2 = null;
 let mathOp = null;
